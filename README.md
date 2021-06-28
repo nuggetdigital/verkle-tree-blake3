@@ -1,10 +1,10 @@
 [![CircleCI](https://circleci.com/gh/gballet/go-verkle.svg?style=shield)](https://circleci.com/gh/gballet/go-verkle)
 
-# go-verkle
+# verkle-tree-blake3
 
-A **very experimental** implementation of [Verkle trees](https://notes.ethereum.org/nrQqhVpQRi6acQckwm1Ryg). When production-ready, the code is to be split between go-kzg and go-ethereum.
+A **very very experimental** implementation of [Verkle trees](https://notes.ethereum.org/nrQqhVpQRi6acQckwm1Ryg).
 
-Supported node widths are 8 and 10 bits.
+This is a simple adaption of [`go-verkle`](https://github.com/gballet/go-verkle) that replaces Golang's `crypto/sha256` (SHA2) with `BLAKE3-256`, for faster leaf hashing, maintaining an adequate 128-bit collision resistance.
 
 ### Running the tests
 
@@ -18,7 +18,7 @@ $ go test .
 $ go test . -bench Bench
 ```
 
-## Performance measurements
+<!-- ## Performance measurements
 
 This table measures the time it takes to calculate the root commitment of the current state of an Ethereum network:
 
@@ -58,4 +58,4 @@ Values with experimental encoding
 |-----------------|------|-----|------------|
 |10K leaves|Proof for 1 leaf|1024|0.93s|
 |10K leaves|Verify proof|1024|4ms|
-
+ -->

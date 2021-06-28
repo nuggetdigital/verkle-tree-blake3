@@ -134,7 +134,7 @@ func TestComputeRootCommitmentThreeLeaves(t *testing.T) {
 	root.Insert(fourtyKeyTest, testValue)
 	root.Insert(ffx32KeyTest, testValue)
 
-	expected := common.Hex2Bytes("951dcba37a55b6ca65717e36a8ba9fc9974c1e4959861ee50d6b935da0ecc869fe278b605108d1c346295c4bdefca3df")
+	expected := common.Hex2Bytes("a4885bef0d634dd43629ea13f8c56b88df274f5caaf933e1070c8f3b3d1b1363358dbfa2e02ee3d918c94a7db8a3fc62")
 
 	comm := root.ComputeCommitment()
 	got := bls.ToCompressedG1(comm)
@@ -154,7 +154,7 @@ func TestComputeRootCommitmentOnlineThreeLeaves(t *testing.T) {
 	// commitment is calculated.
 	comm := root.ComputeCommitment()
 
-	expected := common.Hex2Bytes("951dcba37a55b6ca65717e36a8ba9fc9974c1e4959861ee50d6b935da0ecc869fe278b605108d1c346295c4bdefca3df")
+	expected := common.Hex2Bytes("a4885bef0d634dd43629ea13f8c56b88df274f5caaf933e1070c8f3b3d1b1363358dbfa2e02ee3d918c94a7db8a3fc62")
 
 	got := bls.ToCompressedG1(comm)
 
@@ -169,7 +169,7 @@ func TestComputeRootCommitmentThreeLeavesDeep(t *testing.T) {
 	root.Insert(oneKeyTest, testValue)
 	root.Insert(ffx32KeyTest, testValue)
 
-	expected := common.Hex2Bytes("84651cc7122fcf0e0c6cba8e4f5c0212fc9d257f9fb43ab855c19a2e03396eb0b73720abf0c6d1324dd132f9340bc691")
+	expected := common.Hex2Bytes("b565ef9a47c1b7d536eb4a302cff0e412f7b7578e6c4036e2f23032173c9fc1e9b3c9ea76536fa85082336404c918be2")
 
 	comm := root.ComputeCommitment()
 	got := bls.ToCompressedG1(comm)
@@ -185,7 +185,7 @@ func TestComputeRootCommitmentOnlineThreeLeavesDeep(t *testing.T) {
 	root.InsertOrdered(oneKeyTest, testValue, nil)
 	root.InsertOrdered(ffx32KeyTest, testValue, nil)
 
-	expected := common.Hex2Bytes("84651cc7122fcf0e0c6cba8e4f5c0212fc9d257f9fb43ab855c19a2e03396eb0b73720abf0c6d1324dd132f9340bc691")
+	expected := common.Hex2Bytes("b565ef9a47c1b7d536eb4a302cff0e412f7b7578e6c4036e2f23032173c9fc1e9b3c9ea76536fa85082336404c918be2")
 
 	comm := root.ComputeCommitment()
 	got := bls.ToCompressedG1(comm)
@@ -225,7 +225,7 @@ func TestComputeRootCommitmentTwoLeaves(t *testing.T) {
 	root := New(10)
 	root.Insert(zeroKeyTest, testValue)
 	root.Insert(ffx32KeyTest, testValue)
-	expected := common.Hex2Bytes("a64ec9519659972fdb9d31c4abad5bed33135c0c27eff5d365809d30183785d6813767f2a651ae8642cb699d27bb450d")
+	expected := common.Hex2Bytes("a31bf20b09cd6e791aa53e0af5ae2e55a707733ea48831b90e3884ecd322782f75364a1a85d9d715ef74a8da2e69c3c3")
 
 	comm := root.ComputeCommitment()
 	got := bls.ToCompressedG1(comm)
@@ -282,7 +282,7 @@ func TestComputeRootCommitmentTwoLeaves256(t *testing.T) {
 	root := New(8)
 	root.Insert(zeroKeyTest, testValue)
 	root.Insert(ffx32KeyTest, testValue)
-	expected := common.Hex2Bytes("844b3cdb8312b0126b80746477c2b78014f3c9be90bf4b8830d544a4bd4095144993506559a76182e105704eb899e561")
+	expected := common.Hex2Bytes("838459e468c88ba556c3f2a0df24014b5aaaf19f24954bec58873ff733812d245a1f5950dc3f57ea7fab6357d230b17d")
 
 	comm := root.ComputeCommitment()
 	got := bls.ToCompressedG1(comm)
@@ -807,7 +807,7 @@ func TestMainnetStart(t *testing.T) {
 
 	h := tree.Hash()
 
-	if !bytes.Equal(h[:], common.Hex2Bytes("cebf76a3acc9cfb1d880c480fc85e868a4c346698d239e409c3446a2c1fdb334")) {
+	if !bytes.Equal(h[:], common.Hex2Bytes("c2d9968058c692541c8c37ae0ba165bc5de37d27d16b57827049bd8046912273")) {
 		t.Fatalf("invalid hash: %x", h)
 	}
 }

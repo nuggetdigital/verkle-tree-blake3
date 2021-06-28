@@ -26,7 +26,6 @@
 package verkle
 
 import (
-	"crypto/sha256"
 	"errors"
 	"fmt"
 	"math/big"
@@ -441,7 +440,7 @@ func (n *InternalNode) Get(k []byte, getter NodeResolverFn) ([]byte, error) {
 
 func (n *InternalNode) Hash() common.Hash {
 	comm := n.ComputeCommitment()
-	h := sha256.Sum256(bls.ToCompressedG1(comm))
+	h := hash256(bls.ToCompressedG1(comm))
 	return common.BytesToHash(h[:])
 }
 
@@ -494,7 +493,7 @@ func (n *InternalNode) ComputeCommitment() *bls.G1Point {
 			hashToFr(&poly[idx], child.Hash(), n.treeConfig.modulus)
 		default:
 			compressed := bls.ToCompressedG1(childC.ComputeCommitment())
-			hashToFr(&poly[idx], sha256.Sum256(compressed), n.treeConfig.modulus)
+			hashToFr(&poly[idx], hash256(compressed), n.treeConfig.modulus)
 		}
 	}
 
@@ -628,7 +627,7 @@ func (n *LeafNode) ComputeCommitment() *bls.G1Point {
 			emptyChildren++
 			continue
 		}
-		h := sha256.Sum256(val)
+		h := hash256(val)
 		hashToFr(&poly[idx], h, n.treeConfig.modulus)
 	}
 
@@ -646,7 +645,7 @@ func (n *LeafNode) GetCommitmentsAlongPath(key []byte) ([]*bls.G1Point, []*bls.F
 
 func (n *LeafNode) Hash() common.Hash {
 	comm := n.ComputeCommitment()
-	h := sha256.Sum256(bls.ToCompressedG1(comm))
+	h := hash256(bls.ToCompressedG1(comm))
 	return common.BytesToHash(h[:])
 }
 

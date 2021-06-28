@@ -26,7 +26,6 @@
 package verkle
 
 import (
-	"crypto/sha256"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -34,54 +33,63 @@ import (
 	"github.com/protolambda/go-kzg/bls"
 )
 
+var buf []byte
+
+func init() {
+	buf = make([]byte, 32)
+}
+
 func calcR(cs []*bls.G1Point, indices []*bls.Fr, ys []*bls.Fr, modulus *big.Int) bls.Fr {
-	digest := sha256.New()
+	hash.Reset()
 	for _, c := range cs {
-		h := sha256.Sum256(bls.ToCompressedG1(c))
-		digest.Write(h[:])
+		h := hash256(bls.ToCompressedG1(c))
+		hash.Write(h[:])
 	}
 	for _, idx := range indices {
 		tmp := bls.FrTo32(idx)
-		digest.Write(tmp[:])
+		hash.Write(tmp[:])
 	}
 	for _, y := range ys {
 		tmp := bls.FrTo32(y)
-		digest.Write(tmp[:])
+		hash.Write(tmp[:])
 	}
+	hash.Digest().Read(buf)
 
 	var tmp bls.Fr
-	hashToFr(&tmp, common.BytesToHash(digest.Sum(nil)), modulus)
+	hashToFr(&tmp, common.BytesToHash(buf), modulus)
 	return tmp
-
 }
 
 func calcT(r *bls.Fr, d *bls.G1Point, modulus *big.Int) bls.Fr {
-	digest := sha256.New()
-
+	buf := make([]byte, 32)
+	hash.Reset()
 	tmpBytes := bls.FrTo32(r)
-	digest.Write(tmpBytes[:])
-	tmpBytes = sha256.Sum256(bls.ToCompressedG1(d))
-	digest.Write(tmpBytes[:])
+	hash.Write(tmpBytes[:])
+	tmpBytes = hash256(bls.ToCompressedG1(d))
+	hash.Write(tmpBytes[:])
+	hash.Digest().Read(buf)
 
 	var tmp bls.Fr
-	hashToFr(&tmp, common.BytesToHash(digest.Sum(nil)), modulus)
+	hashToFr(&tmp, common.BytesToHash(buf), modulus)
 	return tmp
 }
 
 func calcQ(e, d *bls.G1Point, y, w *bls.Fr, modulus *big.Int) bls.Fr {
-	digest := sha256.New()
-	hE := sha256.Sum256(bls.ToCompressedG1(e))
-	hD := sha256.Sum256(bls.ToCompressedG1(d))
+	buf := make([]byte, 32)
+	hE := hash256(bls.ToCompressedG1(e))
+	hD := hash256(bls.ToCompressedG1(d))
 
-	digest.Write(hE[:])
-	digest.Write(hD[:])
+	hash.Reset()
+	hash.Write(hE[:])
+	hash.Write(hD[:])
 	tmpBytes := bls.FrTo32(y)
-	digest.Write(tmpBytes[:])
+	hash.Write(tmpBytes[:])
 	tmpBytes = bls.FrTo32(w)
-	digest.Write(tmpBytes[:])
+	hash.Write(tmpBytes[:])
+	hash.Digest().Read(buf)
 
 	var tmp bls.Fr
-	hashToFr(&tmp, common.BytesToHash(digest.Sum(nil)), modulus)
+	hashToFr(&tmp, common.BytesToHash(buf), modulus)
 	return tmp
 }
 
