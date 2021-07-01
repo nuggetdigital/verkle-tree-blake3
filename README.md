@@ -1,18 +1,28 @@
-[![CircleCI](https://circleci.com/gh/gballet/go-verkle.svg?style=shield)](https://circleci.com/gh/gballet/go-verkle)
-
 # verkle-tree-blake3
 
-A **very very experimental** implementation of [Verkle trees](https://notes.ethereum.org/nrQqhVpQRi6acQckwm1Ryg).
+[![ci](https://github.com/nuggetdigital/verkle-tree-blake3/workflows/ci/badge.svg)](https://github.com/nuggetdigital/verkle-tree-blake3/actions/workflows/ci.yml) ![](https://img.shields.io/badge/go%20report-A+-brightgreen.svg?style=flat)
 
-This is a simple adaption of [`go-verkle`](https://github.com/gballet/go-verkle) that replaces Golang's `crypto/sha256` (SHA2) with `BLAKE3-256`, for faster leaf hashing, maintaining an adequate 128-bit collision resistance.
+A ***very very* experimental** implementation of Verkle 🌳🌲
 
-### Running the tests
+This is a simple adaption of [`go-verkle`](https://github.com/gballet/go-verkle) that replaces Golang's [`crypto/sha256`](https://golang.org/pkg/crypto/sha256/) (SHA2) with [`BLAKE3-256`](https://github.com/BLAKE3-team/BLAKE3), for faster leaf hashing, maintaining an adequate 128-bit collision resistance.
+
+## readables
+
++ [math.mit.edu paper](https://math.mit.edu/research/highschool/primes/materials/2018/Kuszmaul.pdf)
+
++ [math.mit.edu slides](https://math.mit.edu/research/highschool/primes/materials/2019/conf/12-5-Kuszmaul.pdf)
+
++ [vitalik.ca blogpost](https://vitalik.ca/general/2021/06/18/verkle.html)
+
++ [notes.ethereum.org blogpost](https://notes.ethereum.org/nrQqhVpQRi6acQckwm1Ryg)
+
+## test
 
 ```
 $ go test .
 ```
 
-### Benchmarks
+## bench
 
 ```
 $ go test . -bench Bench
